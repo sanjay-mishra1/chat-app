@@ -1,0 +1,17 @@
+.login-card {
+  width: 300px;
+  height: fit-content;
+  align-self: center;
+}
+.login-button {
+  margin: 10px;
+  width: 86%;
+}
+.login-container {
+  justify-content: center;
+  height: 100%;
+}
+.login-icon {
+  vertical-align: initial;
+  width: 80%;
+}

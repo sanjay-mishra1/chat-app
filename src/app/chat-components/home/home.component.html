@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="card home-container">
+    <div style="display: flex;">
+      <div class="home-container side-bar">
+
+        <div class="top-bar">
+          <div>
+            <img class="user-small-img" [src]="imageUrl" />
+
+          </div>
+          <p class="user-name">
+            {{userName}}
+          </p>
+          <div>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button (click)='logout()' mat-menu-item>
+                <mat-icon>power_settings_new</mat-icon>
+                <span>Logout</span>
+              </button>
+
+            </mat-menu>
+          </div>
+
+        </div>
+        <div class="top-bar">
+          <button mat-icon-button *ngIf="searchResult" (click)="hideSearch()">
+            <mat-icon>keyboard_backspace</mat-icon>
+          </button>
+          <input class="form-control search-box" name="searchKey" [(ngModel)]="searchKey" autocomplete="off"
+            placeholder="Search" (input)="searchContact()" />
+        </div>
+        <!-- Side bar content -->
+        <div *ngIf="searchResult else contactList">
+          <div *ngFor="let contact of searchResult">
+            <div class="contact-box" (click)="selectUser(contact.userid)">
+              <img class="user-small-img" [src]="contact.photoURL" style="margin: 10px;" />
+              <div>
+                <span>
+                  {{contact.displayName|titlecase}}
+                </span><br />
+                <span>
+                  {{contact.email}}
+                </span>
+              </div>
+            </div>
+
+          </div>
+          <mat-divider></mat-divider>
+
+        </div>
+        <ng-template #contactList>
+          contact list
+        </ng-template>
+      </div>
+      <mat-divider [vertical]="true"></mat-divider>
+
+      <div class="right-bar" *ngIf="currentUid else emptyScreen">
+        <div class=" top-bar">
+          <div>
+            <img class="user-small-img" [src]="imageUrl" />
+
+          </div>
+          <p class="user-name">
+            {{userName}}
+          </p>
+          <div>
+            <button mat-icon-button [matMenuTriggerFor]="messageMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #messageMenu="matMenu">
+              <button (click)='logout()' mat-menu-item>
+                <mat-icon>power_settings_new</mat-icon>
+                <span>Block</span>
+              </button>
+
+            </mat-menu>
+          </div>
+
+        </div>
+        <app-message *ngIf="username" [username]="username" [userid]="currentUid">
+        </app-message>
+      </div>
+      <ng-template #emptyScreen>Empty Screen</ng-template>
+    </div>
+  </div>
+</div>
