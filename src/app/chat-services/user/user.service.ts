@@ -52,6 +52,15 @@ export class UserService {
     });
     return dbData;
   }
+  getContacts(): Observable<any> {
+    let userid = localStorage.user;
+    let data = this.db
+      .collection('users')
+      .doc(userid)
+      .collection('messages', (ref) => ref.orderBy('time', 'desc'))
+      .snapshotChanges();
+    return data;
+  }
   errorHandler(error: HttpErrorResponse) {
     console.error(error);
     return throwError(error.message || 'Server Error');

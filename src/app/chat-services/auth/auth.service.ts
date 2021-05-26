@@ -22,4 +22,22 @@ export class AuthService {
       this.router.navigateByUrl('/login');
     });
   }
+  signinByFacebook() {
+    this.fauth.signInWithRedirect(
+      new firebase.default.auth.FacebookAuthProvider()
+    );
+  }
+  signinByMicrosoft() {
+    let provider = new firebase.default.auth.OAuthProvider('microsoft.com');
+    provider.setCustomParameters({
+      prompt: 'consent',
+      tenant: '6962cf35-b8b1-450d-a323-ee79aa4b18c7',
+    });
+    this.fauth.signInWithRedirect(provider);
+  }
+  signinByTwitter() {
+    this.fauth.signInWithRedirect(
+      new firebase.default.auth.TwitterAuthProvider()
+    );
+  }
 }

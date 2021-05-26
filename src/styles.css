@@ -27,3 +27,16 @@ body {
 .right-bar {
   width: 70%;
 }
+.contact-box {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.contact-box:hover {
+  background: #8080801c;
+}
+.user-small-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}

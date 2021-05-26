@@ -1,0 +1,41 @@
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-size: 15.5px;
+}
+.card {
+  border-radius: 1rem;
+}
+.in-color {
+  background-color: #efefef;
+  color: black;
+}
+.out-color {
+  background-color: #007bff;
+  color: white;
+}
+.message-parent {
+  height: 64vh;
+  /* display: flex; */
+  justify-content: flex-end;
+  flex-direction: column;
+}
+.message-sub-parent {
+  height: 81vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.message-box {
+  margin: 4px;
+  display: flex;
+}
+.message-in {
+  justify-content: flex-end;
+}
+.user-name {
+  flex-grow: 1;
+  margin-top: 10px;
+  margin-left: 5px;
+}

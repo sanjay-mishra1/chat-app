@@ -5,26 +5,13 @@
   width: 30%;
 }
 
-.user-small-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-}
-.user-name {
-  flex-grow: 1;
-  margin-top: 10px;
-  margin-left: 5px;
-}
 .search-box {
   margin: 10px;
   width: 90%;
   border-radius: 17px;
 }
-.contact-box {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-.contact-box:hover {
-  background: #8080801c;
+.user-name {
+  flex-grow: 1;
+  margin-top: 10px;
+  margin-left: 5px;
 }

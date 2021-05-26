@@ -4,6 +4,7 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from 'src/app/chat-models/user/user.model';
 import { AuthService } from 'src/app/chat-services/auth/auth.service';
+import { MessageService } from 'src/app/chat-services/message/message.service';
 import { UserService } from 'src/app/chat-services/user/user.service';
 
 @Component({
@@ -17,9 +18,12 @@ export class HomeComponent implements OnInit {
   searchResult: any = null;
   timer;
   searchKey = '';
-  currentUid: string = null;
-  username: string = null;
-  constructor(private auth: AuthService, private user: UserService) {}
+  currentUser: User = null;
+  constructor(
+    private auth: AuthService,
+    private userService: UserService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.auth.user.subscribe((user) => {
@@ -38,9 +42,11 @@ export class HomeComponent implements OnInit {
     console.log(this.searchKey);
     this.timer = setTimeout(() => {
       if (this.searchKey)
-        this.user.searchUser(this.searchKey.toLowerCase()).then((response) => {
-          this.searchResult = response;
-        });
+        this.userService
+          .searchUser(this.searchKey.toLowerCase())
+          .then((response) => {
+            this.searchResult = response;
+          });
     }, 1000);
   }
   hideSearch() {
@@ -48,9 +54,12 @@ export class HomeComponent implements OnInit {
     this.searchKey = '';
     console.log(this.searchKey);
   }
-  selectUser(userid: string) {
-    this.user.searchUser(userid, true).then((response) => {
-      this.username = response[0].displayName;
-    });
+  selectUser = (user): void => {
+    //this.currentUser = null;
+    this.currentUser = user;
+  };
+  clearChat() {
+    if (this.currentUser)
+      this.messageService.clearAllMessages(this.currentUser.localId);
   }
 }

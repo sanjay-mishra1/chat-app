@@ -35,7 +35,7 @@
         <!-- Side bar content -->
         <div *ngIf="searchResult else contactList">
           <div *ngFor="let contact of searchResult">
-            <div class="contact-box" (click)="selectUser(contact.userid)">
+            <div class="contact-box" (click)="selectUser(contact)">
               <img class="user-small-img" [src]="contact.photoURL" style="margin: 10px;" />
               <div>
                 <span>
@@ -52,38 +52,38 @@
 
         </div>
         <ng-template #contactList>
-          contact list
+          <app-contacts [showUserMessageFn]="selectUser"></app-contacts>
         </ng-template>
       </div>
       <mat-divider [vertical]="true"></mat-divider>
 
-      <div class="right-bar" *ngIf="currentUid else emptyScreen">
+      <div class="right-bar" *ngIf="currentUser else emptyScreen">
         <div class=" top-bar">
           <div>
-            <img class="user-small-img" [src]="imageUrl" />
+            <img class="user-small-img" [src]="currentUser.photoURL" />
 
           </div>
           <p class="user-name">
-            {{userName}}
+            {{currentUser.displayName|titlecase}}
           </p>
           <div>
             <button mat-icon-button [matMenuTriggerFor]="messageMenu">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #messageMenu="matMenu">
-              <button (click)='logout()' mat-menu-item>
-                <mat-icon>power_settings_new</mat-icon>
-                <span>Block</span>
+              <button (click)='clearChat()' mat-menu-item>
+                <mat-icon>delete_forever</mat-icon>
+                <span>Clear Chat</span>
               </button>
 
             </mat-menu>
           </div>
 
         </div>
-        <app-message *ngIf="username" [username]="username" [userid]="currentUid">
+        <app-message *ngIf="currentUser" [user]="currentUser">
         </app-message>
       </div>
-      <ng-template #emptyScreen>Empty Screen</ng-template>
+      <ng-template #emptyScreen></ng-template>
     </div>
   </div>
 </div>

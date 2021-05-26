@@ -1,1 +1,20 @@
-<p>contacts works!</p>
+<div *ngIf="userList">
+  <div *ngFor="let contact of userList">
+    <div class="contact-box" (click)="showUserMessageFn(contact)">
+      <img class="user-small-img" [src]="contact.photoURL" style="margin: 10px;" />
+      <div style="flex-grow: 0.9;">
+        <span>
+          {{contact.displayName|titlecase}}
+        </span><br />
+        <span>
+          {{contact.message}}
+        </span>
+      </div>
+      <div class="message-counter" *ngIf="contact.counter && contact.counter>0">
+        <p>{{contact.counter}}</p>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+
+  </div>
+</div>

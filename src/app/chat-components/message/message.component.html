@@ -1,1 +1,40 @@
-<p>messages</p>
+<div class="message-parent" id="message-parent" *ngIf="messageList else noMessage">
+  <div class="message-sub-parent" id="message-sub-parent">
+    <div class="message-box" [class.message-in]="message.from===userid" *ngFor="let message of messageList">
+      <div>
+        <div class="card" style="width: 18rem;" [class.in-color]="message.from!==userid"
+          [class.out-color]="message.from===userid">
+          <div style="margin-left: 10px;margin-bottom: -7px;">
+            <p *ngIf="message.from!==userid" style="margin-bottom: -4px;">
+              <strong>{{user.displayName|titlecase}}</strong></p>
+            <sub>{{message.time|date:'medium'}}</sub>
+
+          </div>
+          <hr />
+          <div class="card-body" style="padding:0px;padding-left:12px;padding-right:12px">
+            <p>{{message.message}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Loop ended -->
+    <div id="last-element"></div>
+
+  </div>
+</div>
+
+<form #messagForm="ngForm" style="    margin-top: 17.1vh;" (ngSubmit)="sendMessage(message.value)">
+  <textarea [(ngModel)]="inputMessage" ngModel name="msg" #message="ngModel" cols="2" style="position: absolute;
+    padding-right: 6em;    
+    width: 70%;" placeholder="Enter your message" autofocus class="form-control"></textarea>
+  <button type="submit" style="float:right;margin-top: 10px;" mat-mini-fab color="primary"
+    aria-label="Example icon button with a delete icon">
+    <mat-icon>send</mat-icon>
+  </button>
+</form>
+<!-- <div *ngIf="errMsg">
+      <p class="alert alert-danger">{{errMsg}}</p>
+    </div> -->
+<ng-template #noMessage><br />
+  <!-- <p class="alert alert-success" *ngIf="message">{{message}}</p> -->
+</ng-template>

@@ -14,4 +14,13 @@ export class LoginComponent implements OnInit {
   signinByGoogle() {
     this.auth.signinByGoogle();
   }
+  signinByTwitter() {
+    this.auth.signinByTwitter();
+  }
+  signinByMicrosoft() {
+    this.auth.signinByMicrosoft();
+  }
+  signinByFacebook() {
+    this.auth.signinByFacebook();
+  }
 }
