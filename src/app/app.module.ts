@@ -15,6 +15,8 @@ import { AuthService } from './chat-services/auth/auth.service';
 import { ContactsComponent } from './chat-components/contacts/contacts.component';
 import { MessageComponent } from './chat-components/message/message.component';
 import { FormsModule } from '@angular/forms';
+import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/auth';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,15 @@ import { FormsModule } from '@angular/forms';
     materialUiModules,
     FormsModule,
   ],
-  providers: [UserService, MessageService, AuthService],
+  providers: [
+    UserService,
+    MessageService,
+    AuthService,
+    {
+      provide: AUTH_SETTINGS,
+      useValue: { appVerificationDisabledForTesting: true },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

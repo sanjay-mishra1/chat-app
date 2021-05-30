@@ -1,7 +1,5 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/chat-models/user/user.model';
 import { AuthService } from 'src/app/chat-services/auth/auth.service';
 import { MessageService } from 'src/app/chat-services/message/message.service';
@@ -18,14 +16,26 @@ export class HomeComponent implements OnInit {
   searchResult: any = null;
   timer;
   searchKey = '';
-  currentUser: User = null;
+  currentUser: any = null;
+  isMessageUrl: boolean = false;
+  isMobileView: boolean = true;
   constructor(
     private auth: AuthService,
     private userService: UserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.isMessageUrl = this.route.snapshot.params['uid'] ? true : false;
+    if (this.isMessageUrl) {
+      this.userService
+        .searchUser(this.route.snapshot.params['uid'], true)
+        .then((user) => {
+          this.selectUser(user[0]);
+        });
+    }
     this.auth.user.subscribe((user) => {
       if (user) {
         let data: User = user;
@@ -34,12 +44,23 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+  checkIfMobileView() {
+    let element = document.getElementById('mobile-view');
+    if (element) {
+      var hidden = false;
+      if (window.getComputedStyle(element).display == 'none') {
+        hidden = true;
+      }
+      if (!hidden) {
+        this.isMobileView = true;
+      } else this.isMobileView = false;
+    }
+  }
   logout() {
     this.auth.logout();
   }
   searchContact() {
     clearTimeout(this.timer);
-    console.log(this.searchKey);
     this.timer = setTimeout(() => {
       if (this.searchKey)
         this.userService
@@ -52,14 +73,18 @@ export class HomeComponent implements OnInit {
   hideSearch() {
     this.searchResult = null;
     this.searchKey = '';
-    console.log(this.searchKey);
   }
   selectUser = (user): void => {
     //this.currentUser = null;
     this.currentUser = user;
+    this.checkIfMobileView();
+    if (this.isMobileView) this.router.navigateByUrl('messages/' + user.userid);
   };
   clearChat() {
     if (this.currentUser)
-      this.messageService.clearAllMessages(this.currentUser.localId);
+      this.messageService.clearAllMessages(this.currentUser.userid);
+  }
+  back() {
+    this.router.navigateByUrl('/');
   }
 }

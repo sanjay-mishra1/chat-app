@@ -1,16 +1,24 @@
-<div *ngIf="userList">
+<div>
+  <ng-template #showEmptyError>
+    <p *ngIf="errorMsg" class="alert alert-primary">
+      {{errorMsg}}
+    </p>
+  </ng-template>
+</div>
+<div *ngIf="userList else showEmptyError">
   <div *ngFor="let contact of userList">
-    <div class="contact-box" (click)="showUserMessageFn(contact)">
+    <div class="contact-box" (click)="openMessages(contact)">
       <img class="user-small-img" [src]="contact.photoURL" style="margin: 10px;" />
-      <div style="flex-grow: 0.9;">
+      <div style="width:80%">
         <span>
           {{contact.displayName|titlecase}}
         </span><br />
-        <span>
+        <span class="content-text">
           {{contact.message}}
         </span>
       </div>
-      <div class="message-counter" *ngIf="contact.counter && contact.counter>0">
+      <div class="message-counter"
+        *ngIf="contact.counter && contact.counter>0 && _currentUserMessageOpened!=contact.id">
         <p>{{contact.counter}}</p>
       </div>
     </div>

@@ -11,12 +11,17 @@ export class ContactsComponent implements OnInit {
   @Input() showUserMessageFn: (args: any) => void;
   constructor(private _userService: UserService) {}
   userList: User[];
-
+  tempList: any[] = [];
+  size: number = 0;
   currentUserId = localStorage.user;
+  _currentUserMessageOpened: string;
+  errorMsg: string;
   ngOnInit(): void {
     this._userService.getContacts().subscribe((data) => {
-      this.userList = [];
-      console.log(data);
+      this.tempList = [];
+      this.size = data.length;
+      if (this.size == 0) this.errorMsg = 'No contacts found';
+      else this.errorMsg = '';
       data.forEach((user) => {
         const id: string = user.payload.doc.id;
         this.getUser({
@@ -24,13 +29,20 @@ export class ContactsComponent implements OnInit {
           id: id.replace(this.currentUserId, '').replace('-', ''),
         });
       });
-      console.log(this.userList);
     });
   }
   async getUser(user) {
     let userData: User = await this._userService.searchUser(user.id, true);
-    let index = this.userList.findIndex((u: any) => u.userid == user.id);
-    if (index == -1) this.userList.push({ ...user, ...userData[0] });
-    else userData[index] = { ...user, ...userData[0] };
+    let index = this.tempList.findIndex((u: any) => u.userid == user.id);
+    if (index == -1) this.tempList.push({ ...user, ...userData[0] });
+    else this.tempList[index] = { ...user, ...userData[0] };
+    if (this.size == this.tempList.length) {
+      this.userList = [];
+      this.userList = this.tempList;
+    }
+  }
+  openMessages(user) {
+    this._currentUserMessageOpened = user.id;
+    this.showUserMessageFn(user);
   }
 }

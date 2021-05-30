@@ -22,15 +22,18 @@
 
   </div>
 </div>
+<form #messagForm="ngForm" style="   margin-top: 17.1vh;" (ngSubmit)="sendMessage(message.value)">
+  <mat-divider></mat-divider>
 
-<form #messagForm="ngForm" style="    margin-top: 17.1vh;" (ngSubmit)="sendMessage(message.value)">
-  <textarea [(ngModel)]="inputMessage" ngModel name="msg" #message="ngModel" cols="2" style="position: absolute;
-    padding-right: 6em;    
-    width: 70%;" placeholder="Enter your message" autofocus class="form-control"></textarea>
-  <button type="submit" style="float:right;margin-top: 10px;" mat-mini-fab color="primary"
-    aria-label="Example icon button with a delete icon">
-    <mat-icon>send</mat-icon>
-  </button>
+  <div style="display:flex; ">
+    <textarea [(ngModel)]="inputMessage" ngModel name="msg" #message="ngModel" cols="2" style="
+    padding-right: 6em;
+    " placeholder="Enter your message" autofocus class="form-control message-area"></textarea>
+    <button type="submit" style="float:right;margin-top: 10px;" mat-mini-fab color="primary"
+      aria-label="Example icon button with a delete icon">
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
 </form>
 <!-- <div *ngIf="errMsg">
       <p class="alert alert-danger">{{errMsg}}</p>

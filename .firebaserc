@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "friendlychat-c6553": {
+      "hosting": {
+        "chat-app": [
+          "friendlychat-c6553"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "friendlychat-c6553"
+  }
+}

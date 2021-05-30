@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "site": "messagetime",
+    "public": "dist\\chat-app",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

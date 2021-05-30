@@ -11,6 +11,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 export default [
   MatToolbarModule,
   MatFormFieldModule,
@@ -24,4 +26,5 @@ export default [
   MatDividerModule,
   MatDialogModule,
   MatSlideToggleModule,
+  MatProgressSpinnerModule,
 ];

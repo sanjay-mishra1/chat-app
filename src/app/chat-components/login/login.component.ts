@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as firebase from 'firebase';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from 'src/app/chat-services/auth/auth.service';
 @Component({
   selector: 'app-login',
@@ -9,7 +7,10 @@ import { AuthService } from 'src/app/chat-services/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
   constructor(private auth: AuthService) {}
-
+  showMainScreen: boolean = true;
+  showMobileScreen: boolean = false;
+  showProgressScreen: boolean = false;
+  windowRef;
   ngOnInit(): void {}
   signinByGoogle() {
     this.auth.signinByGoogle();
@@ -22,5 +23,18 @@ export class LoginComponent implements OnInit {
   }
   signinByFacebook() {
     this.auth.signinByFacebook();
+  }
+  signinByOtp() {
+    this.showMobileScreen = true;
+    this.showMainScreen = false;
+  }
+  back() {
+    this.showMainScreen = true;
+    this.showMobileScreen = false;
+  }
+  async sendOtp(mobileNumber: string) {
+    // this.windowRef = await this.windowService.windowRef;
+
+    this.auth.signiByOtp(mobileNumber);
   }
 }

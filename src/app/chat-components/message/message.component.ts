@@ -1,10 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DocumentChangeAction } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import { Message } from 'src/app/chat-models/message/message.model';
 import { User } from 'src/app/chat-models/user/user.model';
 import { MessageService } from 'src/app/chat-services/message/message.service';
-import * as firebase from 'firebase';
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
@@ -18,13 +15,14 @@ export class MessageComponent implements OnInit {
   userid = localStorage.user;
   messageObserve: any;
   @Input() set user(value: User) {
+    this.messageList = [];
     if (this.messageObserve) this.messageObserve.unsubscribe();
     this._user = value;
-    console.log(value);
     this.messageObserve = this.messageService
       .getMessages(this._user.userid)
       .subscribe((data) => {
-        //this.messageList = [];
+        this.messageList = [];
+
         data.forEach((message) => {
           const data = message.payload.doc.data() as Message;
           if (data.time) data.time = data.time.toDate();

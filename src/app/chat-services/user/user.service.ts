@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { User } from 'src/app/chat-models/user/user.model';
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 import { Observable, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 @Injectable({
@@ -14,10 +13,9 @@ export class UserService {
       displayName: user.displayName.toLowerCase(),
       email: user.email,
       photoURL: user.photoURL,
-      lastSeen: firebase.default.firestore.FieldValue.serverTimestamp(),
+      lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
       userid: user.uid,
     };
-    console.log(userDb);
     localStorage.setItem('user', user.uid);
     this.db
       .collection('users')
